@@ -3,10 +3,10 @@ import classes from '../../pages/usersList/usersList.module.scss'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchPosts} from './postsSlice'
+import {Link} from 'react-router-dom'
 
 export const Posts = () => {
     const {id} = useParams()
-    console.log("useParams()", useParams())
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchPosts())
@@ -14,17 +14,16 @@ export const Posts = () => {
 
     const posts = useSelector((state) => state.posts)
     const userPosts = posts.posts.filter((post) => id === post.userId.toString())
-    console.log("userPosts", userPosts)
 
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.content}>
-                {userPosts?.map((post) => {
+                {userPosts?.map((post, index) => {
                     return (
                         <div>
                             <div className={classes.postNum}>
-                                Post {post.id}
+                                Post {index + 1}
                             </div>
                             <div className={classes.title}>
                                 {post.title}
@@ -35,6 +34,11 @@ export const Posts = () => {
                         </div>
                     )
                 })}
+                <Link to="/test_app" >
+                    <button className={classes.backBtn} >
+                        Back
+                    </button>
+                </Link>
             </div>
         </div>
     )

@@ -30,7 +30,6 @@ export const UsersList = () => {
                                             {user.name}
                                         </div>
                                         <div>
-                                            {/* <Link to="/posts" key={user.id} > */}
                                             <Link to={`/posts/${user.id}`} key={user.id} >
                                                 <button>
                                                     Posts
