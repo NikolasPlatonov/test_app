@@ -11,7 +11,6 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', () => {
   return axios
     .get('https://jsonplaceholder.typicode.com/posts')
     .then((response) => {
-      console.log('response', response)
       return response.data
     })
 })

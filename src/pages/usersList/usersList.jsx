@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchUsers} from './usersSlice'
 import {Link} from 'react-router-dom'
 import classes from '../usersList/usersList.module.scss'
+import {Modal} from '../../components/modal/modal'
+import Dialog from '@mui/material/Dialog';
 
 export const UsersList = () => {
+    const [openModal, setOpenModal] = useState(false)
+    const [userId, setUserId] = useState()
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchUsers())
@@ -24,27 +28,36 @@ export const UsersList = () => {
                     (
                         <div className={classes.list}>
                             {users?.users?.map((user) => (
-                                <div key={user.id}>
-                                    <div className={classes.item}>
-                                        <div>
-                                            {user.name}
-                                        </div>
-                                        <div>
-                                            <Link to={`/posts/${user.id}`} key={user.id} >
-                                                <button>
-                                                    Posts
+                                <>
+                                    <div key={user.id}>
+                                        <div className={classes.item}>
+                                            <div>
+                                                {user.name}
+                                            </div>
+                                            <div>
+                                                <Link to={`/posts/${user.id}`} key={user.id} >
+                                                    <button>
+                                                        Posts
+                                                    </button>
+                                                </Link>
+                                                <button onClick={() => {setOpenModal(true); setUserId(user.id)}}>
+                                                    Albums
                                                 </button>
-                                            </Link>
-                                            <button>
-                                                Albums
-                                            </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </>
                             ))}
                         </div>
                     ) : null}
             </div>
+            <Dialog
+                PaperProps={{classes: {root: classes.wrapperDialog}}}
+                open={openModal}
+                onClose={() => setOpenModal(false)}
+            >
+                <Modal id={userId} closeModal={setOpenModal} />
+            </Dialog>
         </div >
     )
 }

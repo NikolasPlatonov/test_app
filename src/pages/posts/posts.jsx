@@ -13,7 +13,7 @@ export const Posts = () => {
     }, [])
 
     const posts = useSelector((state) => state.posts)
-    const userPosts = posts.posts.filter((post) => id === post.userId.toString())
+    const userPosts = posts?.posts?.filter((post) => id === post.userId.toString())
 
 
     return (
